@@ -5,16 +5,19 @@ export class Player {
   level = 1;
   x = 0;
   y = canvas.height - 50;
-  w = 120;
-  h = 120;
+  w = 100;
+  h = 100;
   dy = 1;
   low = innerHeight - 185;
   fire = null;
   img = new Image();
-
+  rise = false;
+  jumping = false;
+  
   constructor() {
     this.img.src = `../img/knight/knight${this.level}.png`;
     this.img.onload = () => ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+    
   }
 
   shoot() {
@@ -24,6 +27,14 @@ export class Player {
     this.img.onload();
     if (this.fire) {
       this.fire.move();
+    }
+    if(this.rise){
+      this.dy = -15;
+      this.jumping = true;
+      if(this.jumping){
+        this.rise = false;
+        this.y = 400
+      }
     }
   }
 
@@ -45,7 +56,7 @@ export class Player {
     if (this.level >= 5) {
       this.level = 0;
     }
-    this.x += 10;
+    this.x += 5;
     if (this.x >= 500) {
       this.x = 500;
     }
@@ -65,7 +76,7 @@ export class Player {
   
 
   jump() {
-    this.dy = -20;
+    
   }
   
   

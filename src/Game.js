@@ -3,11 +3,12 @@ import { Fire } from "./Fire.js";
 import { Decoration } from "./Decoration.js";
 import { Platform } from "./Platform.js";
 import { Player } from "./Player.js";
-//import { Enemy } from "./Enemy.js";
+import { Enemy } from "./Enemy.js";
 
 
 export class Game {
-    //enemy = new Enemy();
+    score = 5;
+    enemy = new Enemy();
     platforms = [
       new Platform(0, innerHeight - 100, 1000, 100),
       new Platform(innerWidth+400, innerHeight - 100, 1000, 100),
@@ -50,7 +51,7 @@ export class Game {
           this.player.shoot();
         }
         if (e.key == "ArrowUp") {
-          this.player.jump();
+          this.player.rise = true;
         }
       };
     }
@@ -60,7 +61,6 @@ export class Game {
       if (this.player.x == 500) {
         [...this.objects, ...this.platforms].forEach((p) => (p.x -= 5));
       }
-      console.log(this.objects[3].x);
       if(this.objects[3].x == -1299){
         cancelAnimationFrame(this.id);
         
@@ -68,25 +68,54 @@ export class Game {
     }
   
     run() {
-      ctx.font = "100px Arial";
+      ctx.font = "100px Fantacy";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "yellow";
+      ctx.fillStyle = "#000";
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       this.id = requestAnimationFrame(() => this.run());
       this.objects.forEach((p) => p.draw());
       this.platforms.forEach((p) => p.draw());
       this.player.move();
-      //console.log(this.dragon);
+      console.log(this.player.y);
       this.checkPlatforms();
-      //this.enemy.move();
-      /*if (Math.abs(this.player.x - this.enemy.x) < 100) {
-        if (Math.abs(this.player.y - this.enemy.y) < 100) {
+      this.enemy.move();
+      if (Math.abs(this.player.x - this.enemy.x) < 30) {
+        if (Math.abs(this.player.y - this.enemy.y) < 50) {
+          this.score--;
           cancelAnimationFrame(this.id);
-          ctx.fillText("Game Over", innerWidth / 2, innerHeight / 2);
+          this.enemy.x -= 1000;
+          this.player.x = 0;
+          if(this.score > 0){
+            ctx.fillText(`Stay live ${this.score}`, innerWidth / 2, innerHeight / 2);
+          setTimeout(()=>{
+            this.id = requestAnimationFrame(() => this.run());
+          },2000)
+          }
+          if(this.score == 0){
+            cancelAnimationFrame(this.id);
+            ctx.fillText(`Game Over`, innerWidth / 2, innerHeight / 2);
+           }
         }
-      }*/
+
+      }
+      if(this.objects[6].x <= 900 && this.player.y > innerHeight - 100){
+        this.score--;
+          cancelAnimationFrame(this.id);
+          if(this.score > 0){
+            ctx.fillText(`Stay live ${this.score}`, innerWidth / 2, innerHeight / 2);
+          setTimeout(()=>{
+            this.player.x = 10;
+            this.player.y -= 100;
+            this.id = requestAnimationFrame(() => this.run());
+          },2000)
+          }
+          if(this.score == 0){
+            cancelAnimationFrame(this.id);
+            ctx.fillText(`Game Over`, innerWidth / 2, innerHeight / 2);
+           }
+      }
     }
   
     checkPlatforms() {

@@ -8,7 +8,7 @@ export class Enemy {
 
   img = new Image();
   constructor() {
-    this.img.src = "../img/enemy.PNG";
+    this.img.src = "../img/fire.PNG";
     this.img.onload = () =>
       ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
   }
@@ -18,7 +18,7 @@ export class Enemy {
 
   move() {
     this.draw();
-    this.x -= 2;
+    this.x -= 5;
     if (this.x < 0) {
       this.x = innerWidth + 100;
       this.dx = Math.floor(Math.random() * 5) + 1;
