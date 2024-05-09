@@ -14,3 +14,14 @@ canvas{
     position:relative;
     top:25px;
 }
+a{
+    position: absolute;
+    left:50px;
+    top:50px;
+    color:#000;
+    font-size: 25px;
+    font-weight: 700;
+    font-family: Fantacy;
+    text-decoration: none;
+    z-index:999;
+}

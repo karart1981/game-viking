@@ -88,7 +88,7 @@ export class Game {
           this.enemy.x -= 1000;
           this.player.x = 0;
           if(this.score > 0){
-            ctx.fillText(`Stay live ${this.score}`, innerWidth / 2, innerHeight / 2);
+            ctx.fillText(`Live ${this.score}`, innerWidth / 2, innerHeight / 2);
           setTimeout(()=>{
             this.id = requestAnimationFrame(() => this.run());
           },2000)
@@ -104,7 +104,7 @@ export class Game {
         this.score--;
           cancelAnimationFrame(this.id);
           if(this.score > 0){
-            ctx.fillText(`Stay live ${this.score}`, innerWidth / 2, innerHeight / 2);
+            ctx.fillText(`Live ${this.score}`, innerWidth / 2, innerHeight / 2);
           setTimeout(()=>{
             this.player.x = 10;
             this.player.y -= 100;
